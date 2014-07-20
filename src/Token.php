@@ -100,7 +100,7 @@ class Token
         return in_array($this->getIndex(), [T_CLASS, T_INTERFACE, T_TRAIT]);
     }
 
-    public function isClassPrecursor()
+    public function isPreClassToken()
     {
         return in_array($this->getIndex(), [
             T_CATCH,
@@ -113,7 +113,7 @@ class Token
         ]);
     }
 
-    public function isClassPostcursor()
+    public function isPostClassToken()
     {
         return in_array($this->getIndex(), [
             T_DOUBLE_COLON

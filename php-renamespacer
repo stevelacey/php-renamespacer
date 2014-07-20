@@ -54,8 +54,8 @@ foreach ($finder->files()->in($dst)->name('*.php') as $file) {
     foreach ($tokens as $token) {
         if ($token->isClassNameCandidate()) {
             if (
-                $token->getPreviousSignificant() && $token->getPreviousSignificant()->isClassPrecursor() ||
-                $token->getNextSignificant() && $token->getNextSignificant()->isClassPostcursor()
+                $token->getPreviousSignificant() && $token->getPreviousSignificant()->isPreClassToken() ||
+                $token->getNextSignificant() && $token->getNextSignificant()->isPostClassToken()
             ) {
                 $fqcn = str_replace('_', '\\', $token->getContent());
 
