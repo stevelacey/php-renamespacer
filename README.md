@@ -25,7 +25,7 @@ TODO
 ----
 
 - [ ] Fix type hints
-- [x] Fix multiple implements
+- [x] Fix multiple implements [c4a9d89](https://github.com/stevelacey/php-renamespacer/commit/bd138f704eb7b2302d2ba6d05b52799ad9b6702d)
 - [ ] Jam the namespace declaration in less lazily
 - [ ] Avoid & warn about multi-class files
 - [ ] Wrap up in Symfony\Console task
