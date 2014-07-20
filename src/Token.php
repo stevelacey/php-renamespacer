@@ -148,7 +148,7 @@ class Token
 
     public function isSignificant()
     {
-        return $this->getIndex() && $this->getIndex() != T_WHITESPACE;
+        return $this->getIndex() && !in_array($this->getIndex(), [T_STRING, T_WHITESPACE]);
     }
 
     public function isInsignificant()
