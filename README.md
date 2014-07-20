@@ -24,7 +24,7 @@ Test
 TODO
 ----
 
-- [ ] Fix method param type hints
+- [ ] Fix type hints
 - [ ] Fix multiple implements
 - [ ] Jam the namespace declaration in less lazily
 - [ ] Avoid & warn about multi-class files
