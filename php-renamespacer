@@ -18,6 +18,7 @@ if (count($args) != 2) {
 $src = $args[1];
 $dst = __DIR__ . '/dst/' . basename($src);
 
+$fs->remove($dst);
 $fs->mirror($src, $dst);
 
 foreach ($finder->files()->in($dst)->name('*.php') as $file) {
