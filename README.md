@@ -25,7 +25,7 @@ TODO
 ----
 
 - [ ] Fix method param type hints
-- [ ] Fix multiple inherits
+- [ ] Fix multiple implements
 - [ ] Jam the namespace declaration in less lazily
 - [ ] Avoid & warn about multi-class files
 - [ ] Wrap up in Symfony\Console task
