@@ -1,0 +1,23 @@
+{
+    "name": "steve/php-renamespacer",
+    "description": "An **unfinished** poor-man's namespace to actual namespace converter",
+    "license": "MIT",
+    "require": {
+        "php": "~5.4",
+        "symfony/console": "~2.4",
+        "symfony/filesystem": "~2.4",
+        "symfony/finder": "~2.4"
+    },
+    "require-dev": {
+        "twig/twig": ">=1.8,<2.0-dev"
+    },
+    "authors": [
+        {
+            "name": "Steve Lacey",
+            "email": "steve@stevelacey.net"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "Steve\\Renamespacer\\": "src" }
+    }
+}
