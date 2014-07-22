@@ -2,17 +2,15 @@
 
 namespace Steve\Renamespacer;
 
-class TokenCollection
+class Document
 {
     public $namespace;
 
-    private $tokens;
+    private $tokens = [];
 
-    public function __construct($rawtokens)
+    public function __construct($string)
     {
-        $this->tokens = [];
-
-        foreach ($rawtokens as $i => $rawtoken) {
+        foreach (token_get_all($string) as $i => $rawtoken) {
             $this->tokens[$i] = new Token($rawtoken, $this, $i);
         }
     }

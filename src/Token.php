@@ -14,7 +14,7 @@ class Token
 
     private $position;
 
-    public function __construct($rawtoken, TokenCollection $collection, $position)
+    public function __construct($rawtoken, Document $collection, $position)
     {
         if (is_array($rawtoken)) {
             list ($index, $content, $line) = $rawtoken;

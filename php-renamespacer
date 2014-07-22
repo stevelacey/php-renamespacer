@@ -3,7 +3,8 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-use Steve\Renamespacer;
+use Steve\Renamespacer\Document;
+use Steve\Renamespacer\Fixer;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
@@ -21,13 +22,12 @@ $dst = __DIR__ . '/dst/' . basename($src);
 $fs->remove($dst);
 $fs->mirror($src, $dst);
 
-$fixer = new Renamespacer\Fixer();
-$parser = new Renamespacer\TokenParser();
+$fixer = new Fixer();
 
 foreach (Finder::create()->files()->in($dst)->name('*.php') as $file) {
     echo $file->getRelativePathname(), PHP_EOL;
 
-    $document = $parser->parse($file->getContents());
+    $document = new Document($file->getContents());
 
     $fixer->fix($document);
 

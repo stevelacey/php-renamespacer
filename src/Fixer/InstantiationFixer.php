@@ -3,11 +3,11 @@
 namespace Steve\Renamespacer\Fixer;
 
 use Steve\Renamespacer\AbstractFixer;
-use Steve\Renamespacer\TokenCollection;
+use Steve\Renamespacer\Document;
 
 class InstantiationFixer extends AbstractFixer
 {
-    public function fix(TokenCollection $document)
+    public function fix(Document $document)
     {
         foreach ($document->getTokens() as $token) {
             if ($token->isClassNameCandidate()) {

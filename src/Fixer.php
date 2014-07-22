@@ -40,7 +40,7 @@ class Fixer
         return $this->fixers;
     }
 
-    public function fix(TokenCollection $document)
+    public function fix(Document $document)
     {
         foreach ($this->getFixers() as $fixer) {
             $fixer->fix($document);

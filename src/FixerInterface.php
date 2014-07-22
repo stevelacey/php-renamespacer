@@ -7,7 +7,7 @@ namespace Steve\Renamespacer;
  */
 interface FixerInterface
 {
-    public function fix(TokenCollection $tokens);
+    public function fix(Document $document);
 
     /**
      * Returns the priority of the fixer.
