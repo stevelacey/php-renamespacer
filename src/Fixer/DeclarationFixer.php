@@ -9,7 +9,7 @@ class DeclarationFixer extends AbstractFixer
 {
     public function fix(Document $document)
     {
-        $document->namespaces = [];
+        $namespaces = [];
 
         foreach ($document->getTokens() as $token) {
             if ($token->isClassNameCandidate()) {
@@ -18,8 +18,8 @@ class DeclarationFixer extends AbstractFixer
                     $class = array_pop($segments);
                     $namespace = implode('\\', $segments);
 
-                    if ($namespace && !in_array($namespace, $document->namespaces)) {
-                        $document->namespaces[] = $namespace;
+                    if ($namespace && !in_array($namespace, $namespaces)) {
+                        $namespaces[] = $namespace;
                     }
 
                     $token->setContent($class);
@@ -27,8 +27,10 @@ class DeclarationFixer extends AbstractFixer
             }
         }
 
-        if (count($document->namespaces) === 1) {
-            $document->namespace = $document->namespaces[0];
+        $document->setNamespaces($namespaces);
+
+        if (count($namespaces) === 1) {
+            $document->setNamespace($namespaces[0]);
         }
     }
 

@@ -4,7 +4,7 @@ namespace Steve\Renamespacer;
 
 class Token
 {
-    private $collection;
+    private $document;
 
     private $content;
 
@@ -14,7 +14,7 @@ class Token
 
     private $position;
 
-    public function __construct($rawtoken, Document $collection, $position)
+    public function __construct($rawtoken, Document $document, $position)
     {
         if (is_array($rawtoken)) {
             list ($index, $content, $line) = $rawtoken;
@@ -26,7 +26,7 @@ class Token
             $this->setContent($rawtoken);
         }
 
-        $this->setCollection($collection);
+        $this->setDocument($document);
         $this->setPosition($position);
     }
 
@@ -35,14 +35,14 @@ class Token
         return $this->getContent();
     }
 
-    public function getCollection()
+    public function getDocument()
     {
-        return $this->collection;
+        return $this->document;
     }
 
-    public function setCollection($collection)
+    public function setDocument($document)
     {
-        $this->collection = $collection;
+        $this->document = $document;
 
         return $this;
     }
@@ -133,7 +133,7 @@ class Token
 
     public function getPrevious()
     {
-        $tokens = $this->getCollection()->getTokens();
+        $tokens = $this->getDocument()->getTokens();
 
         if (array_key_exists($this->getPosition() - 1, $tokens)) {
             return $tokens[$this->getPosition() - 1];
@@ -142,7 +142,7 @@ class Token
 
     public function getNext()
     {
-        $tokens = $this->getCollection()->getTokens();
+        $tokens = $this->getDocument()->getTokens();
 
         if (array_key_exists($this->getPosition() + 1, $tokens)) {
             return $tokens[$this->getPosition() + 1];

@@ -22,14 +22,45 @@ $dst = __DIR__ . '/dst/' . basename($src);
 $fs->remove($dst);
 $fs->mirror($src, $dst);
 
+$documents = [];
 $fixer = new Fixer();
 
 foreach (Finder::create()->files()->in($dst)->name('*.php') as $file) {
-    echo $file->getRelativePathname(), PHP_EOL;
-
-    $document = new Document($file->getContents());
+    $document = $documents[] = new Document($file);
 
     $fixer->fix($document);
 
     $fs->dumpFile($file->getRealpath(), (string) $document);
+
+    echo '.';
 }
+
+$count = count($documents);
+
+$multiples = array_filter($documents, function ($document) {
+    return count($document->getNamespaces()) > 1;
+});
+
+if ($multiples) {
+    echo '
+
+multiple namespace candidates found in:
+
+';
+
+    echo implode(PHP_EOL, array_map(
+        function ($document) {
+            return $document->getFile()->getRelativePathname();
+        },
+        $multiples
+    ));
+}
+
+echo '
+
+--
+
+' . $count . ' files processed
+
+done, review any problems above and run your tests
+';

@@ -15,8 +15,10 @@ abstract class AbstractFixer implements FixerInterface
 
         $token->setContent('\\' . $fqcn);
 
-        if ($token->getCollection()->namespace) {
-            $ncn = preg_replace('#^' . preg_quote($token->getCollection()->namespace . '\\') . '#', '', $fqcn);
+        $namespace = $token->getDocument()->getNamespace();
+
+        if ($namespace) {
+            $ncn = preg_replace('#^' . preg_quote($namespace . '\\') . '#', '', $fqcn);
 
             if ($ncn && $fqcn != $ncn) {
                 $token->setContent($ncn);

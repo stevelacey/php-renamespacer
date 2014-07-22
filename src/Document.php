@@ -4,13 +4,17 @@ namespace Steve\Renamespacer;
 
 class Document
 {
-    public $namespace;
+    private $namespace;
+
+    private $namespaces;
 
     private $tokens = [];
 
-    public function __construct($string)
+    public function __construct($file)
     {
-        foreach (token_get_all($string) as $i => $rawtoken) {
+        $this->file = $file;
+
+        foreach (token_get_all($file->getContents()) as $i => $rawtoken) {
             $this->tokens[$i] = new Token($rawtoken, $this, $i);
         }
     }
@@ -29,6 +33,37 @@ class Document
         return $content;
     }
 
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    public function getNamespace()
+    {
+        return $this->namespace;
+    }
+
+    public function setNamespace($namespace)
+    {
+        $this->namespace = $namespace;
+
+        return $this;
+    }
+
+    public function getNamespaces()
+    {
+        sort($this->namespaces);
+
+        return $this->namespaces;
+    }
+
+    public function setNamespaces($namespaces)
+    {
+        $this->namespaces = $namespaces;
+
+        return $this;
+    }
+
     public function getTokens()
     {
         return $this->tokens;
@@ -36,27 +71,25 @@ class Document
 
     private function patch($content)
     {
-        $nsBlock = null;
+        $block = null;
 
-        if ($this->namespace) {
-            $nsBlock = 'namespace ' . $this->namespace . ';';
-        } elseif ($this->namespaces) {
-            sort($this->namespaces);
-
-            $nsBlock = "/**
+        if ($this->getNamespace()) {
+            $block = 'namespace ' . $this->getNamespace() . ';';
+        } elseif ($this->getNamespaces()) {
+            $block = "/**
  * php-renamespacer namespace candidates
  *
 ";
 
-            foreach ($this->namespaces as $namespace) {
-                $nsBlock .= ' * namespace ' . $namespace . ';' . PHP_EOL;
+            foreach ($this->getNamespaces() as $namespace) {
+                $block .= ' * namespace ' . $namespace . ';' . PHP_EOL;
             }
 
-            $nsBlock .= ' */';
+            $block .= ' */';
         }
 
-        if ($nsBlock) {
-            $content = preg_replace('#<\?php\s+#', "<?php\n\n$nsBlock\n\n", $content);
+        if ($block) {
+            $content = preg_replace('#<\?php\s+#', "<?php\n\n$block\n\n", $content);
         }
 
         return $content;
