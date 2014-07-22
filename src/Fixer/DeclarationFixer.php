@@ -34,6 +34,6 @@ class DeclarationFixer implements FixerInterface
 
     public function getPriority()
     {
-        return -10;
+        return 10;
     }
 }
