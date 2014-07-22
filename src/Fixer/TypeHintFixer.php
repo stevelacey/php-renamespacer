@@ -2,10 +2,10 @@
 
 namespace Steve\Renamespacer\Fixer;
 
-use Steve\Renamespacer\FixerInterface;
+use Steve\Renamespacer\AbstractFixer;
 use Steve\Renamespacer\TokenCollection;
 
-class TypeHintFixer implements FixerInterface
+class TypeHintFixer extends AbstractFixer
 {
     public function fix(TokenCollection $document)
     {
@@ -19,17 +19,12 @@ class TypeHintFixer implements FixerInterface
 
                 while ($t && $t->getContent() != ')') {
                     if ($t->isClassNameCandidate()) {
-                        $t->setContent('\\' . str_replace('_', '\\', $t->getContent()));
+                        $this->rewrite($t);
                     }
 
                     $t = $t->getNext();
                 }
             }
         }
-    }
-
-    public function getPriority()
-    {
-        return 0;
     }
 }

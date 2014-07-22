@@ -2,10 +2,10 @@
 
 namespace Steve\Renamespacer\Fixer;
 
-use Steve\Renamespacer\FixerInterface;
+use Steve\Renamespacer\AbstractFixer;
 use Steve\Renamespacer\TokenCollection;
 
-class DeclarationFixer implements FixerInterface
+class DeclarationFixer extends AbstractFixer
 {
     public function fix(TokenCollection $document)
     {

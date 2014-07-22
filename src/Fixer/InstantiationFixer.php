@@ -2,39 +2,22 @@
 
 namespace Steve\Renamespacer\Fixer;
 
-use Steve\Renamespacer\FixerInterface;
+use Steve\Renamespacer\AbstractFixer;
 use Steve\Renamespacer\TokenCollection;
 
-class InstantiationFixer implements FixerInterface
+class InstantiationFixer extends AbstractFixer
 {
     public function fix(TokenCollection $document)
     {
         foreach ($document->getTokens() as $token) {
             if ($token->isClassNameCandidate()) {
-                if (
-                    $token->getPreviousSignificant() && $token->getPreviousSignificant()->isPreClassToken() ||
-                    $token->getNextSignificant() && $token->getNextSignificant()->isPostClassToken()
-                ) {
-                    $fqcn = str_replace('_', '\\', $token->getContent());
+                $previous = $token->getPreviousSignificant();
+                $next = $token->getNextSignificant();
 
-                    if ($document->namespace) {
-                        $ncn = preg_replace('#^' . preg_quote($document->namespace . '\\') . '#', '', $fqcn);
-
-                        if ($ncn && $fqcn != $ncn) {
-                            $token->setContent($ncn);
-                        } else {
-                            $token->setContent('\\' . $fqcn);
-                        }
-                    } else {
-                        $token->setContent('\\' . $fqcn);
-                    }
+                if ($previous && $previous->isPreClassToken() || $next && $next->isPostClassToken()) {
+                    $this->rewrite($token);
                 }
             }
         }
-    }
-
-    public function getPriority()
-    {
-        return -10;
     }
 }
