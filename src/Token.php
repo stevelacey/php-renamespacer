@@ -126,7 +126,8 @@ class Token
             'parent',
             'self',
             'true',
-            'false'
+            'false',
+            'null'
         ]);
     }
 
