@@ -124,7 +124,9 @@ class Token
     {
         return $this->getIndex() === T_STRING && !in_array($this->getContent(), [
             'parent',
-            'self'
+            'self',
+            'true',
+            'false'
         ]);
     }
 
