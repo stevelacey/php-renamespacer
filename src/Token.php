@@ -104,8 +104,6 @@ class Token
     {
         return in_array($this->getIndex(), [
             T_CATCH,
-            T_EXTENDS,
-            T_IMPLEMENTS,
             T_INSTANCEOF,
             T_INSTEADOF,
             T_NEW,
@@ -159,6 +157,11 @@ class Token
         return !$this->isSignificant();
     }
 
+    public function isWhitespace()
+    {
+        return $this->getIndex() && !in_array($this->getIndex(), [T_WHITESPACE]);
+    }
+
     public function getPreviousSignificant()
     {
         $token = $this->getPrevious();
@@ -175,6 +178,28 @@ class Token
         $token = $this->getNext();
 
         while ($token && $token->isInsignificant()) {
+            $token = $token->getNext();
+        }
+
+        return $token;
+    }
+
+    public function getPreviousNonWhitespace()
+    {
+        $token = $this->getPrevious();
+
+        while ($token && !$token->isWhitespace()) {
+            $token = $token->getPrevious();
+        }
+
+        return $token;
+    }
+
+    public function getNextNonWhitespace()
+    {
+        $token = $this->getNext();
+
+        while ($token && !$token->isWhitespace()) {
             $token = $token->getNext();
         }
 

@@ -1,0 +1,53 @@
+#!/usr/bin/env php
+<?php
+
+$_SERVER['argv'][] = './vendor/twig/twig';
+
+require_once __DIR__ . '/php-renamespacer';
+
+# fix bootstrap
+
+$fs->dumpFile(__DIR__ . '/dst/twig/test/bootstrap.php', "<?php
+
+require_once dirname(__FILE__) . '/../vendor/autoload.php';
+");
+
+# fix composer.json
+
+$file = __DIR__ . '/dst/twig/composer.json';
+$fs->dumpFile($file, str_replace('Twig_', 'Twig\\\\', file_get_contents($file)));
+
+# fix CoreTest
+
+$file = __DIR__ . '/dst/twig/test/Twig/Tests/Extension/CoreTest.php';
+$fs->dumpFile($file, str_replace('twig_', '\Twig\Extension\twig_', file_get_contents($file)));
+
+# fix SandboxTest
+
+$file = __DIR__ . '/dst/twig/test/Twig/Tests/Extension/SandboxTest.php';
+$fs->dumpFile($file, str_replace('\FooObject', 'FooObject', file_get_contents($file)));
+
+# fix Twig\Environment
+
+$file = __DIR__ . '/dst/twig/lib/Twig/Environment.php';
+$fs->dumpFile($file, str_replace(
+    "'base_template_class' => 'Twig_Template'",
+    "'base_template_class' => '\\\\Twig\\\\Template'",
+    file_get_contents($file)
+));
+
+# trash tests with namespace conflicts
+
+$fs->dumpFile(__DIR__ . '/dst/twig/test/Twig/Tests/EnvironmentTest.php', '');
+$fs->dumpFile(__DIR__ . '/dst/twig/test/Twig/Tests/ErrorTest.php', '');
+$fs->dumpFile(__DIR__ . '/dst/twig/test/Twig/Tests/IntegrationTest.php', '');
+$fs->dumpFile(__DIR__ . '/dst/twig/test/Twig/Tests/Loader/ArrayTest.php', '');
+$fs->dumpFile(__DIR__ . '/dst/twig/test/Twig/Tests/TemplateTest.php', '');
+
+# install vendors and run tests
+
+chdir(__DIR__ . '/dst/twig');
+
+exec('composer install');
+
+exec('phpunit --process-isolation .');

@@ -24,10 +24,15 @@ Test
 TODO
 ----
 
-- [x] Fix type hints
-- [x] Fix multiple implements [c4a9d89](https://github.com/stevelacey/php-renamespacer/commit/bd138f704eb7b2302d2ba6d05b52799ad9b6702d)
-- [ ] Jam the namespace declaration in less lazily
-- [x] Avoid & warn about multi-class files
-- [ ] Wrap up in Symfony\Console task
-- [x] Summarise and highlight problems such as multiple namespace candidates
+- [ ] Fix global function references
+- [ ] Fix up abnormalities we can't automate and run Twig test suite as part of ours
+    Current state:
+
+    ```
+    FAILURES!
+    Tests: 270, Assertions: 1040, Failures: 8, Errors: 93.
+    ```
 - [ ] PHPUnit test against a couple of underscore namespaced libs (Twig & ?)
+- [ ] Attempt to fix predictable docblocks
+- [ ] Jam the namespace declaration in less lazily
+- [ ] Wrap up in Symfony\Console task

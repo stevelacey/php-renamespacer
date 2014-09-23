@@ -14,7 +14,7 @@ class DeclarationFixer extends AbstractFixer
         foreach ($document->getTokens() as $token) {
             if ($token->isClassNameCandidate()) {
                 if ($token->getPreviousSignificant() && $token->getPreviousSignificant()->isDeclaration()) {
-                    $segments = explode('_', $token->getContent());
+                    $segments = explode('\\', $this->unreserve($this->desnake($token->getContent())));
                     $class = array_pop($segments);
                     $namespace = implode('\\', $segments);
 

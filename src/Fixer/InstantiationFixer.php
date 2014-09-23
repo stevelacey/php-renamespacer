@@ -11,8 +11,8 @@ class InstantiationFixer extends AbstractFixer
     {
         foreach ($document->getTokens() as $token) {
             if ($token->isClassNameCandidate()) {
-                $previous = $token->getPreviousSignificant();
-                $next = $token->getNextSignificant();
+                $previous = $token->getPreviousNonWhitespace();
+                $next = $token->getNextNonWhitespace();
 
                 if ($previous && $previous->isPreClassToken() || $next && $next->isPostClassToken()) {
                     $this->rewrite($token);
