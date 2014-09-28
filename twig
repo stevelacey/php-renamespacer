@@ -48,6 +48,6 @@ $fs->dumpFile(__DIR__ . '/dst/twig/test/Twig/Tests/TemplateTest.php', '');
 
 chdir(__DIR__ . '/dst/twig');
 
-exec('composer install');
+passthru('composer install');
 
-exec('phpunit --process-isolation .');
+passthru('phpunit --process-isolation .');

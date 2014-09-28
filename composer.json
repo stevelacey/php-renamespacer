@@ -9,6 +9,7 @@
         "symfony/finder": "~2.4"
     },
     "require-dev": {
+        "swiftmailer/swiftmailer": ">=5.2,<5.4-dev",
         "twig/twig": ">=1.8,<2.0-dev"
     },
     "authors": [
