@@ -30,7 +30,9 @@ abstract class AbstractFixer implements FixerInterface
             $fqcn = $this->unreserve($this->desnake($fqcn));
         }
 
-        $token->setContent('\\' . $fqcn);
+        if ($token->getPrevious()->getIndex() != T_NS_SEPARATOR) {
+            $token->setContent('\\' . $fqcn);
+        }
 
         $namespace = $token->getDocument()->getNamespace();
 
